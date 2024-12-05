@@ -41,35 +41,35 @@ protocol.home()
 
 # Plates and tips
 #          (PCR PLATE)
-posicion_placa_pcr=int(input("PCR plate position:"))
-plate_pcr = protocol.load_labware("nest_96_wellplate_100ul_pcr_full_skirt", posicion_placa_pcr)
+pcr_plate_position=int(input("PCR plate position:"))
+plate_pcr = protocol.load_labware("nest_96_wellplate_100ul_pcr_full_skirt", pcr_plate_position)
 plate_pcr.set_offset(x=0.00, y=2.00, z=0.00)
 #          (RESERVOIR)
-posicion_reservorio=int(input("Reservoir position:"))
-reservoir = protocol.load_labware("opentrons_24_tuberack_nest_1.5ml_snapcap", posicion_reservorio)
+reservoir_position=int(input("Reservoir position:"))
+reservoir = protocol.load_labware("opentrons_24_tuberack_nest_1.5ml_snapcap", reservoir_position)
 reservoir.set_offset(x=0.00, y=2.00, z=2.00)
 #          (TIP RACKS) 
-tips_p300=int(input("Amount of tipracks for P300: "))
-lista_tips_p300=[]
-for i in range (1, tips_p300+1):
+p300_tips=int(input("Amount of tipracks for P300: "))
+p300_tips_list=[]
+for i in range (1, p300_tips+1):
     print("For the P300 tiprack n° ", i)
-    posicion_tips_i=int(input("Position: "))
-    tips_i = protocol.load_labware("opentrons_96_tiprack_300ul", posicion_tips_i)
+    position_tips_i=int(input("Position: "))
+    tips_i = protocol.load_labware("opentrons_96_tiprack_300ul", position_tips_i)
     tips_i.set_offset(x=0.00, y=1.50, z=0.00)
-    lista_tips_p300.append(tips_i)
+    p300_tips_list.append(tips_i)
     i+=1
-tips_p20=int(input("Amount of tipracks for P20: "))
-lista_tips_p20=[]
-for j in range (1, tips_p20+1):
+p20_tips=int(input("Amount of tipracks for P20: "))
+p20_tips_list=[]
+for j in range (1, p20_tips+1):
     print("For the P20 tiprack n° ", j)
-    posicion_tips_j=int(input("Position: "))
-    tips_j = protocol.load_labware("opentrons_96_tiprack_20ul", posicion_tips_j)
+    position_tips_j=int(input("Position: "))
+    tips_j = protocol.load_labware("opentrons_96_tiprack_20ul", position_tips_j)
     tips_j.set_offset(x=0.00, y=1.50, z=0.00)
-    lista_tips_p20.append(tips_j)
+    p20_tips_list.append(tips_j)
     j+=1
 #Pipettes 
-p300_pipette = protocol.load_instrument("p300_single_gen2", "left", tip_racks=lista_tips_p300)
-p20_pipette = protocol.load_instrument("p20_single_gen2", "right", tip_racks=lista_tips_p20)
+p300_pipette = protocol.load_instrument("p300_single_gen2", "left", tip_racks= p300_tips_list)
+p20_pipette = protocol.load_instrument("p20_single_gen2", "right", tip_racks= p20_tips_list)
 
 
 
