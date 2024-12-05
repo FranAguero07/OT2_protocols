@@ -1,5 +1,4 @@
-# # Summary
-
+# # SUMMARY
 # This protocol first moves solutions from a 96-well plate to a 384-well plate, mixing 5 times in each step. 
 # For this it takes 90 uL of B2 (96 wells) and moves it to A1 (384 wells), then takes 90 uL of C2 (96 wells) 
 # and moves it to B1 (384 wells), then from D2 (96 wells) to C1 (384 wells); and so on until moving the entire
@@ -11,10 +10,7 @@
 # So it is necessary to manually place the eppendorf with the substrate in position A1 of the tuberack. It is 
 # supposed to use at least 600 uL of substrate (10uL * 60 wells)
 
-
-
-# # Labware needed for running this protocol:
-
+# # LABWARE NEEDED for running this protocol:
 # For moving liquids from 96 well plates to 384 well plate
 # - 384 well plate: corning_384_wellplate_112ul_flat
 # - 96 well plate: nest_96_wellplate_200ul_flat
@@ -28,9 +24,6 @@
 # This protocol uses different coordinates for each labware. If you want to use the default coordinates, delete de line "labware.set_offset()" for each one.
 
 
-
-##Protocol
-
 #import opentrons.simulate
 #protocol = opentrons.simulate.get_protocol_api('2.11')
 import opentrons.execute
@@ -42,6 +35,9 @@ metadata = {
     "author": "Aguero Franco Agustin, Didier Garnham Mercedes"
     }
 protocol.home()
+
+
+# LABWARE INPUTS for moving solution from 96 to 384 well plate  
 
 _384_plate_position=int(input("384 well plate position:"))
 plate_384 = protocol.load_labware("corning_384_wellplate_112ul_flat", _384_plate_position)
@@ -58,7 +54,6 @@ if answer in confirmation_list:
         for j in abc:
             well_j = j + str(i)
             _384_wells_list.append(well_j)
-    
 elif answer in negation_list:
     _384_wells_list = []
     abc= ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"]
@@ -90,7 +85,8 @@ reservoir.set_offset(x=0.00, y=1.00, z=0.00)
 #Pipette
 p300_pipette = protocol.load_instrument("p300_single_gen2", "left", tip_racks= tips_list)
 
-#MOVING FROM 96 TO 384 WELL PLATE 
+
+# PROTOCOL for moving solution from 96 to 384 well plate 
 _384_wells= _384_wells_list
 i=0
 k=9
@@ -106,7 +102,8 @@ for plate in plates_list:
             k+=1
         k+=2
 
-# FOR ADDING SUBSTRATUM --
+
+# LABWARE NEEDED for adding substratum
 #Reservoir
 reservoir_position=int(input("Reservoir position: "))
 reservoir = protocol.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", reservoir_position)
@@ -122,6 +119,8 @@ for i in range (1, tips_p20+1):
     tips_p20_list.append(tips_i)
     i+=1
 p20_single_pipette = protocol.load_instrument("p20_single_gen2","right", tip_racks=tips_p20_list)
+
+# PROTOCOL for adding substratum
 #Passage from eppendorf with substratum (placed in A1) to 384 well plate
 def substratum_to_384 (k,j):
     for i in range(k,j):

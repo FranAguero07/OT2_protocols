@@ -1,5 +1,4 @@
-# # Summary
-
+# # SUMMARY
 # This protocol takes 100 uL of solution from the first column of the reservoir and puts it in well A2 of the
 # first 96-well plate, then takes another 100uL from the reservoir (first column) and puts it in well A3 of 
 # the 96-well plate; so on until reach well A11. At the end, mix each well 2 times from A2 to A11, and between 
@@ -10,20 +9,16 @@
 # in column A12 of the reservoir, and in each column you will use of the reservor (consider one column per 
 # plate), you will have to put 10 mL of the lisis solution.
 
-
-
-# # Labware needed for running this protocol:
-
+# # LABWARE NEEDED for running this protocol:
 # - Reservoir: nest_12_reservoir_15ml
 # - 96 well plates: nest_96_wellplate_200ul_flat
 # - Tipracks: opentrons_96_tiprack_300ul (this protocol will consider a tiprack for each plate)
 # - Pipette: p300 single on left
 
-# This protocol uses different coordinates for each labware. If you want to use the default coordinates, delete the line "labware.set_offset()" for each one.
+# This protocol uses different coordinates for each labware. If you want to use the default coordinates, 
+# delete the line "labware.set_offset()" for each one.
 
 
-
-## Protocol
 
 import opentrons.execute
 protocol = opentrons.execute.get_protocol_api('2.11')
@@ -36,6 +31,7 @@ metadata = {
     "author": "Aguero Franco Agustin, Didier Garnham Mercedes"
     }
 protocol.home()
+
 
 # LABWARE INPUTS
 
@@ -63,7 +59,8 @@ for i in range (1, plates+1):
 #Pipette
 left_pipette = protocol.load_instrument("p300_single_gen2", "left", tip_racks= tips_list)
 
-# METHODS
+
+# PROTOCOL
 
 def wash_tip():
     left_pipette.mix(1, 100, reservoir["A12"])
@@ -108,6 +105,5 @@ if check in confirmation_list:
     pass
 else:
     print("Please, check on microscope the effective lysis of the plate")
-
 #for line in protocol.commands():
  #   print(line)
