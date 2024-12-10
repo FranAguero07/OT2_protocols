@@ -3,3 +3,5 @@ In this folder there are attached the scripts used to carry out some of the prot
 - Preparing the drugs´ dilutions and combinations
 - Cell lysis
 - Transfering solutions to the 384 well plate and adding de substract
+
+# How to use this protocol
