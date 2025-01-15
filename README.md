@@ -1,7 +1,10 @@
-# Protocols designed for Opentrons OT-2
-In this folder there are attached the scripts used to carry out some of the protocols described in the paper, employing the automatic pipetting robot "Opentrons OT-2". These steps include the ones involved in: 
-- Preparing the drugs´ dilutions and combinations
-- Cell lysis
-- Transfering solutions to the 384 well plate and adding de substract
+# Protocols for Opentrons OT-2
+By The Trypanosomatics Laboratory, UNSAM
+
+This repository contains scripts (.py) for protocols described in our paper, designed for use with the Opentrons OT-2 automated pipetting robot. These protocols cover:
+- Preparation of drug dilutions and combinations
+- Cell lysis procedure
+- Solution transfer to 384-well plates and substrate addition
+Additionally, a specification file (.txt) details required labware and procedural steps for each protocol.
 
 # How to use this protocol
