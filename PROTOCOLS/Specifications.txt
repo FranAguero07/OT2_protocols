@@ -65,4 +65,4 @@ Pipette: p300_single_gen2 on left
 - - For substrate transfer to the 384-well plate:
 Reservoir: opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap
 Tipracks: opentrons_96_tiprack_20ul
-Pipette: p20_single_gen2 on right (depending on the number of wells)
+Pipette: p20_single_gen2 on right
