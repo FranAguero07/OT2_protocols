@@ -9,14 +9,11 @@ metadata = {
 }
 def run(ctx: protocol_api.ProtocolContext):
     # LABWARE INPUTS
-    reservoir_position = 1  # Define the deck position for the reservoir
-    reservoir = protocol.load_labware("nest_12_reservoir_15ml", reservoir_position) #sino usar ctx.load_labware()
+    reservoir = protocol.load_labware("nest_12_reservoir_15ml", 1) #sino usar ctx.load_labware()
     #reservoir.set_offset(x=0.00, y=0.00, z=0.00)
     # Plates and tipracks
-    plates_positions = [2, 3]  # Define deck positions for plates
-    tips_positions = [4, 5]    # Define deck positions for tipracks
-    plates_list = [protocol.load_labware("nest_96_wellplate_200ul_flat", pos) for pos in plates_positions]
-    tips_list = [protocol.load_labware("opentrons_96_tiprack_300ul", pos) for pos in tips_positions]
+    plates_list = protocol.load_labware("nest_96_wellplate_200ul_flat", 2)
+    tips_list = protocol.load_labware("opentrons_96_tiprack_300ul", 3)
     # Pipette
     left_pipette = protocol.load_instrument("p300_single_gen2", "left", tip_racks=tips_list)
 
@@ -48,22 +45,6 @@ def run(ctx: protocol_api.ProtocolContext):
     res_columns = ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8","A9","A10","A11","A12"]
     lysis_solution(res_columns, plate_wells, plates)
     protocol.home()
-    #incubate=input("Write OK after the plate was incubated for 30 minutes: ")
-    #if incubate=="OK":
-    #    pass
-    #elif incubate=="ok":
-    #    pass
-    #elif incubate=="Ok":
-    #    pass
-    #else:
-    #    print("Incubate before continuing the protocol")
-    #    stop
-    #confirmation_list= ["Yes","YES","yes"]
-    #negation_list= ["No","NO","no"]
-    #check=input("Did you check the effective lysis of the plate on microscope? (answer YES/NO) : ")
-    #if check in confirmation_list:
-    #    pass
-    #else:
-    #    print("Please, check on microscope the effective lysis of the plate")
-    #for line in protocol.commands():
-    #   print(line)
+
+    for line in protocol.commands():
+       print(line)
