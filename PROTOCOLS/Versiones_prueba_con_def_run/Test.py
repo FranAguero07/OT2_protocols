@@ -4,7 +4,7 @@ metadata = {
     "apiLevel": "2.11",
     "protocolName": "Simple Pipetting Protocol",
     "description": "A simple example of pipetting and printing actions",
-    "author": "Franco Agustín Agüero"
+    "author": "..."
 }
 
 def run(ctx: protocol_api.ProtocolContext):
