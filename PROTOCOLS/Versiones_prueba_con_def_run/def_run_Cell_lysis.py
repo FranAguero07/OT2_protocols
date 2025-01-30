@@ -9,15 +9,15 @@ metadata = {
 }
 def run(ctx: protocol_api.ProtocolContext):
     # LABWARE INPUTS
-    reservoir = protocol.load_labware("nest_12_reservoir_15ml", 1) #sino usar ctx.load_labware()
+    reservoir = ctx.load_labware("nest_12_reservoir_15ml", 1) #sino usar ctx.load_labware()
     #reservoir.set_offset(x=0.00, y=0.00, z=0.00)
     # Plates and tipracks
-    plates_list = protocol.load_labware("nest_96_wellplate_200ul_flat", 2)
-    tips_list = protocol.load_labware("opentrons_96_tiprack_300ul", 3)
+    plates_list = [ctx.load_labware("nest_96_wellplate_200ul_flat", 2)]
+    tips_list = [ctx.load_labware("opentrons_96_tiprack_300ul", 3), ctx.load_labware("opentrons_96_tiprack_300ul", 4)]
     # Pipette
-    left_pipette = protocol.load_instrument("p300_single_gen2", "left", tip_racks=tips_list)
+    left_pipette = ctx.load_instrument("p300_single_gen2", "left", tip_racks=tips_list)
 
-    protocol.home()
+    ctx.home()
     # PROTOCOL
     def wash_tip():
         left_pipette.mix(1, 100, reservoir["A12"]) #sino probar source= reservoir["A12"]
@@ -43,8 +43,8 @@ def run(ctx: protocol_api.ProtocolContext):
             left_pipette.return_tip()
     plate_wells = _96_wells_list
     res_columns = ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8","A9","A10","A11","A12"]
-    lysis_solution(res_columns, plate_wells, plates)
-    protocol.home()
+    lysis_solution(res_columns, plate_wells, len(plates_list))
+    ctx.home()
 
-    for line in protocol.commands():
+    for line in ctx.commands():
        print(line)
