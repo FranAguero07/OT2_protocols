@@ -1,19 +1,17 @@
-#TESTEAR ANTES DE USAR!!!!!!! FALTA REVISAR!!!!
 from opentrons import protocol_api
-#import json
 metadata = {
     "apiLevel": "2.11",
     "protocolName": "Parasite Lysis",
     "description": "Protocol for lysing parasites in a 96-well plate",
-    "author": "Aguero Franco Agustin, Didier Garnham Mercedes"
+    "author": "Salas Sarduy Emir, Didier Garnham Mercedes, Aguero Franco Agustin"
 }
+#LABWARE INPUTS
 def run(ctx: protocol_api.ProtocolContext):
-    # LABWARE INPUTS
-    reservoir = ctx.load_labware("nest_12_reservoir_15ml", 1) #sino usar ctx.load_labware()
-    #reservoir.set_offset(x=0.00, y=0.00, z=0.00)
-    # Plates and tipracks
-    plates_list = [ctx.load_labware("nest_96_wellplate_200ul_flat", 2)]
-    tips_list = [ctx.load_labware("opentrons_96_tiprack_300ul", 3), ctx.load_labware("opentrons_96_tiprack_300ul", 4)]
+    reservoir = ctx.load_labware("nest_12_reservoir_15ml", 1)
+    plates_list = ctx.load_labware("nest_96_wellplate_200ul_flat", 2)
+    plates_list.set_offset (x=0.00, y=0.50, z=0.00)
+    tips_list = ctx.load_labware("opentrons_96_tiprack_300ul", 3)
+    tips_list.set_offset ((x=0.00, y=1.50, z=0.00))
     # Pipette
     left_pipette = ctx.load_instrument("p300_single_gen2", "left", tip_racks=tips_list)
 
