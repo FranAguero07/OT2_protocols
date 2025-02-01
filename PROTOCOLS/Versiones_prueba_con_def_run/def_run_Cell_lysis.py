@@ -5,8 +5,9 @@ metadata = {
     "description": "Protocol for lysing parasites in a 96-well plate",
     "author": "Salas Sarduy Emir, Didier Garnham Mercedes, Aguero Franco Agustin"
 }
-#LABWARE INPUTS
+
 def run(ctx: protocol_api.ProtocolContext):
+    #LABWARE INPUTS
     reservoir = ctx.load_labware("nest_12_reservoir_15ml", 1)
     plates_list = ctx.load_labware("nest_96_wellplate_200ul_flat", 2)
     plates_list.set_offset (x=0.00, y=0.50, z=0.00)
