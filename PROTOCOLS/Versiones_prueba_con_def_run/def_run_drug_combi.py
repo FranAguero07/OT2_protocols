@@ -8,10 +8,12 @@ metadata = {
 
 def run(ctx: protocol_api.ProtocolContext):
     #LABWARE INPUTS
+    ctx.home()
     plate_pcr = ctx.load_labware("nest_96_wellplate_100ul_pcr_full_skirt", 1)
     plate_pcr.set_offset(x=0.00, y=2.00, z=0.00)
     reservoir = ctx.load_labware("opentrons_24_tuberack_nest_1.5ml_snapcap", 2)
     reservoir.set_offset(x=0.00, y=2.00, z=2.00)
+    #          (TIP RACKS) 
     p300_tips=1
     p300_tips_list=[]
     for i in range (1, p300_tips+1):
@@ -33,7 +35,7 @@ def run(ctx: protocol_api.ProtocolContext):
     p20_pipette = ctx.load_instrument("p20_single_gen2", "right", tip_racks= p20_tips_list)
 
     # PROTOCOLS
-    ctx.home()
+
     #Add DMSO in first row
     p300_pipette.pick_up_tip()
     for k in range (2,10):
@@ -42,14 +44,20 @@ def run(ctx: protocol_api.ProtocolContext):
         p300_pipette.dispense(50, plate_pcr.rows()[0][k], rate= 0.5)
         p300_pipette.blow_out(plate_pcr.rows()[0][k])
         p300_pipette.touch_tip(plate_pcr.rows()[0][k])
+    #p300_pipette.drop_tip()
+
     #Add DMSO in first column
+    #p300_pipette.pick_up_tip()
     for j in range (2,7):
         p300_pipette.aspirate(50, reservoir["A1"])
         p300_pipette.touch_tip(v_offset=-3)
         p300_pipette.dispense(50, plate_pcr.wells()[j], rate= 0.5)
         p300_pipette.blow_out(plate_pcr.wells()[j])
         p300_pipette.touch_tip(plate_pcr.wells()[j])
+    #p300_pipette.drop_tip()
+
     #Add 10 uL DMSO in column 11
+    #p300_pipette.pick_up_tip()
     for j in range (80,87):
         p300_pipette.aspirate(10, reservoir["A1"])
         p300_pipette.touch_tip(v_offset=-3)
@@ -57,6 +65,7 @@ def run(ctx: protocol_api.ProtocolContext):
         p300_pipette.blow_out(plate_pcr.wells()[j])
         p300_pipette.touch_tip(plate_pcr.wells()[j])
     p300_pipette.drop_tip()
+
     #Drug dilution on first column, B1 to F1 (G1 has no compound)
     p300_pipette.pick_up_tip()
     for i in range (1, 5):
@@ -70,6 +79,7 @@ def run(ctx: protocol_api.ProtocolContext):
     p300_pipette.blow_out()
     p300_pipette.touch_tip()
     p300_pipette.drop_tip()
+
     #Drug dilution on first row, A2 to A9 (A11 has no compound)
     p300_pipette.pick_up_tip()
     for i in range (1, 9):
@@ -94,6 +104,7 @@ def run(ctx: protocol_api.ProtocolContext):
             p20_pipette.blow_out(plate_pcr.columns()[10-i][k])
             p20_pipette.touch_tip(plate_pcr.columns()[10-i][k], v_offset=-2)
         p20_pipette.drop_tip()
+
     # Dilutions from down to top (takes from A2 and distribute in rows A2 to F2)
     for k in range(1,10):
         p20_pipette.pick_up_tip()
