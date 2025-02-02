@@ -29,7 +29,7 @@ def run(ctx: protocol_api.ProtocolContext):
         plate_i_position= 1+i
         plate_i = ctx.load_labware("nest_96_wellplate_200ul_flat", plate_i_position)
         plate_i.set_offset(x=1.00, y=2.00, z=0.00)
-        plates_list.ctx(plate_i)
+        plates_list.append(plate_i)
         #TIP RACKS
         tips_i_position= 1+ plate_i_position
         tips_i = ctx.load_labware("opentrons_96_tiprack_300ul", tips_i_position)
@@ -49,7 +49,7 @@ def run(ctx: protocol_api.ProtocolContext):
     i=0
     k=9
     for plate in plates_list: 
-        while k<96:
+        while k<86:
             for j in range(k, k+6):
                 p300_pipette.pick_up_tip()
                 p300_pipette.mix(5, 100, plate.wells()[k])
