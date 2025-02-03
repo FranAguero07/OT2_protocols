@@ -21,30 +21,27 @@ def run(ctx: protocol_api.ProtocolContext):
     tips_p20_list=[]
     plates_list=[]
     if plates==1:
-        plate_384 = ctx.load_labware("corning_384_wellplate_112ul_flat", 1)
+        plate_384 = ctx.load_labware("corning_384_wellplate_112ul_flat", 8)
         plate_384.set_offset(x=0.50, y=1.50, z=3.00)
-        
-        #PLATES
-        plate_1 = ctx.load_labware("nest_96_wellplate_200ul_flat", 2)
+        plate_1 = ctx.load_labware("nest_96_wellplate_200ul_flat", 9)
         plate_1.set_offset(x=1.00, y=2.00, z=0.00)
         plates_list.append(plate_1)
-        #TIP RACKS
-        tips_1 = ctx.load_labware("opentrons_96_tiprack_300ul", 3)
+        tips_1 = ctx.load_labware("opentrons_96_tiprack_300ul", 6)
         tips_1.set_offset(x=0.00, y=1.00, z=0.00)
         tips_list.append(tips_1)
-        #Reservoir
-        reservoir = ctx.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", 4)
+        reservoir = ctx.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", 11)
         reservoir.set_offset(x=0.00, y=1.00, z=0.00)
-        #Pipette
-        p300_pipette = ctx.load_instrument("p300_single_gen2", "left", tip_racks= tips_list)
-
         # LABWARE NEEDED for adding substratum
         #Pipette and tips
-        tips_p20= ctx.load_labware("opentrons_96_tiprack_20ul", 5)
+        tips_p20= ctx.load_labware("opentrons_96_tiprack_20ul", 10)
         tips_p20.set_offset(x=0.00, y=1.00, z=0.00)
         tips_p20_list.append(tips_p20)
-        p20_single_pipette = ctx.load_instrument("p20_single_gen2","right", tip_racks=tips_p20_list)
+    elif plates==2:
 
+
+
+    p300_pipette = ctx.load_instrument("p300_single_gen2", "left", tip_racks= tips_list)
+    p20_single_pipette = ctx.load_instrument("p20_single_gen2","right", tip_racks=tips_p20_list)
     # PROTOCOL for moving solution from 96 to 384 well plate 
     _384_wells= _384_wells_list
     i=0
