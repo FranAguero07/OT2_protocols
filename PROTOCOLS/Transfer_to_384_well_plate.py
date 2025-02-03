@@ -8,7 +8,7 @@ metadata = {
 
 def run(ctx: protocol_api.ProtocolContext):
     ctx.home()
-    plates=1                     #Write the amount of plates you want to transfer
+    plates=2                     #Write the amount of plates you want to transfer
     first_384_column= 1          #Write the 384 well plate column from where you want to start using 
     _384_wells_list = []
     abc= ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"]
