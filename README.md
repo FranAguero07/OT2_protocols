@@ -14,12 +14,14 @@ First of all, it is important to clarify that the following steps were carried o
 1. **Access the Protocols Folder**  
    Once inside the **GitHub repository**, navigate to the **"PROTOCOLS"** folder. Inside, there will be a file named **"Specifications.txt"** (previously mentioned) along with three additional files, which are the protocols. Open one of these three protocol files.  
 
+
 2. **Copy the Raw File URL**  
    Once the desired file is open, click on the **"Raw"** button (Figure 1) and copy the URL of the page that opens, as shown in Figure 2.  
    ![Imagen 1](Images_for_README/Opentrons_image1.png)
    ![Imagen 2](Images_for_README/Opentrons_image2.png)
    Example of a copied URL:  
 https://raw.githubusercontent.com/user/repository/branch/file.py
+
 
 3. **Download the File to the Local System**  
 The next step is to download the selected file to the local system.  
@@ -37,11 +39,13 @@ The next step is to download the selected file to the local system.
   ```sh
   ls -l
   ```
+
 4. **Import the Protocol into the Opentrons Application**  
 - Open the **Opentrons** application and go to the **"Protocols"** section. Click on the **"Upload"** option.  
 - Select the downloaded file and click **"Open."**  
 ![Imagen 3](Images_for_README/Opentrons_image3.png)
 - If other protocols have already been added, go to the **"Import"** section, where the **"Upload"** option will be available.  
 ![Imagen 4](Images_for_README/Opentrons_image4.png)
+
 
 > **Note:** It is essential to ensure that the downloaded file is in **`.py`** format. Otherwise, it will not be recognized by the application.
