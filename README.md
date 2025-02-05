@@ -48,4 +48,4 @@ The next step is to download the selected file to the local system.
 ![Imagen 4](Images_for_README/Opentrons_image4.png)
 
 
-> **Note:** It is essential to ensure that the downloaded file is in **`.py`** format. Otherwise, it will not be recognized by the application.
+**Note:** It is essential to ensure that the downloaded file is in **`.py`** format. Otherwise, it will not be recognized by the application.
