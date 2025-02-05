@@ -2,7 +2,10 @@
 This file contains detailed specifications for the three protocols, including the necessary labware 
 and step-by-step instructions for each one.
 Protocols uses specific coordinates for each labware. If you want to use the default coordinates, remove 
-the line "labware.set_offset()" for each item
+the line "labware.set_offset()" for each item.
+It is also important to emphasize that the protocols are by default set to work with one plate per run. 
+However, it is possible to use them for multiple plates if the line(s) commented with the style "#Write 
+the amount of ...." are modified in the .py file.
 
 
 Protocol 1: "Cell_lysis.py"
