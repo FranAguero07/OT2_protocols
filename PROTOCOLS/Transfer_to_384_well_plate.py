@@ -28,36 +28,36 @@ def run(ctx: protocol_api.ProtocolContext):
         reservoir_lot = [11]
         tips_20 = [10]
     elif plates == 2:
-        plate_384_lot = [8, 11]
-        plates_96_lot = [9, 10]
-        tips_300_lot = [6]
+        plate_384_lot = [8]
+        plates_96_lot = [9, 11]
+        tips_300_lot = [6,10]
         reservoir_lot = [7]
         tips_20 = [5]
     elif plates == 3:
-        plate_384_lot = [8, 11, 9]
-        plates_96_lot = [5, 10, 6]
-        tips_300_lot = [7]
+        plate_384_lot = [8]
+        plates_96_lot = [5, 9, 11]
+        tips_300_lot = [6, 7, 10]
         reservoir_lot = [4]
         tips_20 = [1]
     elif plates == 4:
-        plate_384_lot = [8, 10, 11, 6]
-        plates_96_lot = [9, 7, 4, 3]
-        tips_300_lot = [5]
+        plate_384_lot = [8]
+        plates_96_lot = [6,9,10,11]
+        tips_300_lot = [3,4,5,7]
         reservoir_lot = [2]
         tips_20 = [1]
     
+    plate_384 = ctx.load_labware("corning_384_wellplate_112ul_flat", plate_384_lot[0])
+    plate_384.set_offset(x=0.50, y=1.50, z=3.00)
+
     for i in range(plates):
-        plate_384 = ctx.load_labware("corning_384_wellplate_112ul_flat", plate_384_lot[i])
-        plate_384.set_offset(x=0.50, y=1.50, z=3.00)
         
         plate_i = ctx.load_labware("nest_96_wellplate_200ul_flat", plates_96_lot[i])
         plate_i.set_offset(x=1.00, y=2.00, z=0.00)
         plates_list.append(plate_i)
         
-        if i < len(tips_300_lot): 
-            tips_i = ctx.load_labware("opentrons_96_tiprack_300ul", tips_300_lot[i])
-            tips_i.set_offset(x=0.00, y=1.00, z=0.00)
-            tips_list.append(tips_i)
+        tips_i = ctx.load_labware("opentrons_96_tiprack_300ul", tips_300_lot[i])
+        tips_i.set_offset(x=0.00, y=1.00, z=0.00)
+        tips_list.append(tips_i)
         
         if i < len(reservoir_lot):
             reservoir = ctx.load_labware("opentrons_24_tuberack_eppendorf_1.5ml_safelock_snapcap", reservoir_lot[i])
@@ -71,55 +71,55 @@ def run(ctx: protocol_api.ProtocolContext):
     p300_pipette = ctx.load_instrument("p300_single_gen2", "left", tip_racks= tips_list)
     p20_single_pipette = ctx.load_instrument("p20_single_gen2","right", tip_racks=tips_p20_list)
 
-
     # PROTOCOL for moving solution from 96 to 384 well plate 
-    _384_wells= _384_wells_list
-    i=0
-    k=9
+    _384_wells = _384_wells_list
+    i = 0  # Para recorrer la lista de wells de la 384
+    k_start = 9  # Posición inicial en cada placa de 96
+
     for plate in plates_list: 
-        while k<86:
-            for j in range(k, k+6):
+        k = k_start  # Reiniciar k en cada nueva placa de 96
+        while k < 86:
+            for j in range(k, k + 6):
                 p300_pipette.pick_up_tip()
-                p300_pipette.mix(5, 100, plate.wells()[k])
-                p300_pipette.aspirate(90, plate.wells()[k])
-                p300_pipette.dispense(90, plate_384[_384_wells[i]])
+                p300_pipette.mix(5, 100, plate.wells()[j])  # Mezclar en el pozo correcto
+                p300_pipette.aspirate(90, plate.wells()[j])  # Aspirar de la placa de 96
+                p300_pipette.dispense(90, plate_384.wells_by_name()[_384_wells[i]])  # Transferir a la 384
                 p300_pipette.drop_tip()
-                i+=1
-                k+=1
-            k+=2
+                i += 1  # Pasar al siguiente pozo en la 384
+            k += 8  # Saltar dos columnas para mantener patrón
 
-    # PROTOCOL for adding substratum
-    #Passage from eppendorf with substratum (placed in A1) to 384 well plate
-    def substratum_to_384 (k,j):
-        for i in range(k,j):
-                p20_single_pipette.aspirate(15, reservoir["A1"])
-                p20_single_pipette.dispense(10,plate_384[_384_wells_list[i]])
-                p20_single_pipette.dispense(5, reservoir["A1"])
-                i+=1
-    #For controls
-    a=1
-    m=54
-    n=60
-    p20_single_pipette.pick_up_tip()
-    while a<= plates:
-        x= substratum_to_384(m,n)
-        m+=60
-        n+=60
-        a+=1
-    p20_single_pipette.drop_tip()
-    #For the other wells
-    a=1
-    m=0
-    n=54
-    p20_single_pipette.pick_up_tip()
-    while a<= plates:
-        x= substratum_to_384(m,n)
-        m+=60
-        n+=60
-        a+=1
-    p20_single_pipette.drop_tip()
+        # PROTOCOL for adding substratum
+        #Passage from eppendorf with substratum (placed in A1) to 384 well plate
+        def substratum_to_384 (k,j):
+            for i in range(k,j):
+                    p20_single_pipette.aspirate(15, reservoir["A1"])
+                    p20_single_pipette.dispense(10,plate_384[_384_wells_list[i]])
+                    p20_single_pipette.dispense(5, reservoir["A1"])
+                    i+=1
+        #For controls
+        a=1
+        m=54
+        n=60
+        p20_single_pipette.pick_up_tip()
+        while a<= plates:
+            x= substratum_to_384(m,n)
+            m+=60
+            n+=60
+            a+=1
+        p20_single_pipette.drop_tip()
+        #For the other wells
+        a=1
+        m=0
+        n=54
+        p20_single_pipette.pick_up_tip()
+        while a<= plates:
+            x= substratum_to_384(m,n)
+            m+=60
+            n+=60
+            a+=1
+        p20_single_pipette.drop_tip()
 
-    ctx.home()
+        ctx.home()
 
-    for line in ctx.commands():
-        print(line)
+        for line in ctx.commands():
+            print(line)
