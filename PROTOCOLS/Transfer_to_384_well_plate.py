@@ -8,7 +8,7 @@ metadata = {
 
 def run(ctx: protocol_api.ProtocolContext):
     ctx.home()
-    plates=3                     #Write the amount of plates you want to transfer
+    plates=1                     #Write the amount of plates you want to transfer
     first_384_column= 1          #Write the 384 well plate column from where you want to start using 
     _384_wells_list = []
     abc= ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"]
@@ -73,20 +73,20 @@ def run(ctx: protocol_api.ProtocolContext):
 
     # PROTOCOL for moving solution from 96 to 384 well plate 
     _384_wells = _384_wells_list
-    i = 0  # Para recorrer la lista de wells de la 384
-    k_start = 9  # Posición inicial en cada placa de 96
+    i = 0  
+    k_start = 9  
 
     for plate in plates_list: 
-        k = k_start  # Reiniciar k en cada nueva placa de 96
+        k = k_start  
         while k < 86:
             for j in range(k, k + 6):
                 p300_pipette.pick_up_tip()
-                p300_pipette.mix(5, 100, plate.wells()[j])  # Mezclar en el pozo correcto
-                p300_pipette.aspirate(90, plate.wells()[j])  # Aspirar de la placa de 96
-                p300_pipette.dispense(90, plate_384.wells_by_name()[_384_wells[i]])  # Transferir a la 384
+                p300_pipette.mix(5, 100, plate.wells()[j])  
+                p300_pipette.aspirate(90, plate.wells()[j])  
+                p300_pipette.dispense(90, plate_384.wells_by_name()[_384_wells[i]]) 
                 p300_pipette.drop_tip()
-                i += 1  # Pasar al siguiente pozo en la 384
-            k += 8  # Saltar dos columnas para mantener patrón
+                i += 1  
+            k += 8  
 
         # PROTOCOL for adding substratum
         #Passage from eppendorf with substratum (placed in A1) to 384 well plate

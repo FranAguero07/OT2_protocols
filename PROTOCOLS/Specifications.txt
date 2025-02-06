@@ -5,7 +5,9 @@ Protocols uses specific coordinates for each labware. If you want to use the def
 the line "labware.set_offset()" for each item.
 It is also important to emphasize that the protocols are by default set to work with one plate per run. 
 However, it is possible to use them for multiple plates if the line(s) commented with the style "#Write 
-the amount of ...." are modified in the .py file.
+the amount of plates...." are modified in the .py file. In "Transfer_to_384_well_plate.py" protocol, you
+can also specify the 384 well plate column from where you want to start using it (useful if the 384 well 
+plate has already been used)
 
 
 Protocol 1: "Cell_lysis.py"
