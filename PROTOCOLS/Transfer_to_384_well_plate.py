@@ -8,7 +8,7 @@ metadata = {
 
 def run(ctx: protocol_api.ProtocolContext):
     ctx.home()
-    plates=1                     #Write the amount of plates you want to transfer
+    plates=2                     #Write the amount of plates you want to transfer
     first_384_column= 1          #Write the 384 well plate column from where you want to start using 
     _384_wells_list = []
     abc= ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"]
@@ -56,7 +56,7 @@ def run(ctx: protocol_api.ProtocolContext):
         plates_list.append(plate_i)
         
         tips_i = ctx.load_labware("opentrons_96_tiprack_300ul", tips_300_lot[i])
-        tips_i.set_offset(x=0.00, y=1.00, z=0.00)
+        tips_i.set_offset(x=0.00, y=1.50, z=0.00)
         tips_list.append(tips_i)
         
         if i < len(reservoir_lot):
@@ -65,7 +65,7 @@ def run(ctx: protocol_api.ProtocolContext):
         
         if i < len(tips_20):
             tips_p20_i = ctx.load_labware("opentrons_96_tiprack_20ul", tips_20[i])
-            tips_p20_i.set_offset(x=0.00, y=1.00, z=0.00)
+            tips_p20_i.set_offset(x=0.00, y=1.50, z=0.00)
             tips_p20_list.append(tips_p20_i)
     
     p300_pipette = ctx.load_instrument("p300_single_gen2", "left", tip_racks= tips_list)
@@ -88,8 +88,10 @@ def run(ctx: protocol_api.ProtocolContext):
                 i += 1  
             k += 8  
 
+
+    s=0
+    for plate in plates_list: 
         # PROTOCOL for adding substratum
-        #Passage from eppendorf with substratum (placed in A1) to 384 well plate
         def substratum_to_384 (k,j):
             for i in range(k,j):
                     p20_single_pipette.aspirate(15, reservoir["A1"])
@@ -98,8 +100,8 @@ def run(ctx: protocol_api.ProtocolContext):
                     i+=1
         #For controls
         a=1
-        m=54
-        n=60
+        m=s+54
+        n=s+60
         p20_single_pipette.pick_up_tip()
         while a<= plates:
             x= substratum_to_384(m,n)
@@ -109,8 +111,8 @@ def run(ctx: protocol_api.ProtocolContext):
         p20_single_pipette.drop_tip()
         #For the other wells
         a=1
-        m=0
-        n=54
+        m=s+0
+        n=s+54
         p20_single_pipette.pick_up_tip()
         while a<= plates:
             x= substratum_to_384(m,n)
@@ -118,8 +120,9 @@ def run(ctx: protocol_api.ProtocolContext):
             n+=60
             a+=1
         p20_single_pipette.drop_tip()
+        s+= 60
 
         ctx.home()
 
-        for line in ctx.commands():
-            print(line)
+       # for line in ctx.commands():
+            #print(line)
