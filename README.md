@@ -51,7 +51,7 @@ The next step is to download the selected file to the local system.
 
 **Note:** It is essential to ensure that the downloaded file is in **`.py`** format. Otherwise, it will not be recognized by the application.
 
-## 🎬 Proyect demo
+## 🎬 Project demo
 Here there is a demostration:
 
 ![GIF de la funcionalidad](Images_for_README/Video.gif)
